@@ -1,0 +1,12 @@
+project = "baseProject"
+
+[mysql]
+ip = "127.0.0.1"
+port = 3306
+username = "root"
+password = "hnf"
+database = "hnf"
+
+[redis]
+ip = "127.0.0.1"
+port = 6379
