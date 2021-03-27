@@ -7,7 +7,6 @@ import (
 
 const (
 	configFile = "config.toml"
-	secretKey = "hnf27"
 )
 
 type Mysql struct {
@@ -15,7 +14,7 @@ type Mysql struct {
 	Port     int    `mapstructure:"port"`
 	Username string `mapstructure:"username"`
 	Password string `mapstructure:"password"`
-	Database string
+	Database string `mapstructure:"database"`
 }
 
 func (m *Mysql) GetDSN() string {
@@ -38,11 +37,17 @@ func (r *Redis) GetDSN() string {
 	return fmt.Sprintf("%s:%d", r.Ip, r.Port)
 }
 
+type Project struct {
+	Name      string `mapstructure:"name"`
+	Stage     string `mapstructure:"stage"`
+	Port      int    `mapstructure:"port"`
+	SecretKey string `mapstructure:"secretKey"`
+}
+
 type Config struct {
-	Project   string `mapstructure:"project"`
-	SecretKey string
-	Mysql     Mysql `mapstructure:"mysql"`
-	Redis     Redis `mapstructure:"redis"`
+	Project Project `mapstructure:"project"`
+	Mysql   Mysql   `mapstructure:"mysql"`
+	Redis   Redis   `mapstructure:"redis"`
 }
 
 func InitConfig() *Config {
@@ -57,6 +62,5 @@ func InitConfig() *Config {
 		panic(fmt.Sprintf("[configure]parse config failed: %v", err))
 	}
 	fmt.Println("[configure]loaded config succeed.")
-	c.SecretKey = secretKey
 	return &c
 }

@@ -1,4 +1,8 @@
-project = "baseProject"
+[project]
+name = "baseProject"
+stage = "development"
+pory = 8888
+secretKey = "haner27"
 
 [mysql]
 ip = "127.0.0.1"

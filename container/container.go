@@ -5,7 +5,10 @@ import (
 	"baseProject/controller"
 	"baseProject/datasource"
 	"baseProject/repository"
+	"baseProject/router"
+	"baseProject/server"
 	"baseProject/service"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 )
 
@@ -27,8 +30,13 @@ func BuildContainer() *dig.Container {
 	// controller
 	_ = container.Provide(controller.NewUserController)
 
+	// gin engine
+	_ = container.Provide(gin.New)
+
 	// router
+	_ = container.Provide(router.NewRouter)
 
 	// server
+	_ = container.Provide(server.NewHttpServer)
 	return container
 }
