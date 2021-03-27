@@ -9,7 +9,11 @@ import (
 	"time"
 )
 
-func InitMysqlDB(conf *config.Config) *gorm.DB {
+type MysqlDB struct {
+	Cli *gorm.DB
+}
+
+func NewMysqlDB(conf *config.Config) *MysqlDB {
 	dsn := conf.Mysql.GetDSN()
 	sqlDB, err := sql.Open("mysql", dsn)
 	if err != nil {
@@ -27,5 +31,5 @@ func InitMysqlDB(conf *config.Config) *gorm.DB {
 	if err != nil {
 		panic(fmt.Sprintf("[dataSource]connect mysql(%s) failed: %v", dsn, err))
 	}
-	return db
+	return &MysqlDB{db}
 }

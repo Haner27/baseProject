@@ -7,6 +7,7 @@ import (
 
 const (
 	configFile = "config.toml"
+	secretKey = "hnf27"
 )
 
 type Mysql struct {
@@ -33,10 +34,15 @@ type Redis struct {
 	Port int    `mapstructure:"port"`
 }
 
+func (r *Redis) GetDSN() string {
+	return fmt.Sprintf("%s:%d", r.Ip, r.Port)
+}
+
 type Config struct {
-	Project string `mapstructure:"project"`
-	Mysql   Mysql  `mapstructure:"mysql"`
-	Redis   Redis  `mapstructure:"redis"`
+	Project   string `mapstructure:"project"`
+	SecretKey string
+	Mysql     Mysql `mapstructure:"mysql"`
+	Redis     Redis `mapstructure:"redis"`
 }
 
 func InitConfig() *Config {
@@ -51,5 +57,6 @@ func InitConfig() *Config {
 		panic(fmt.Sprintf("[configure]parse config failed: %v", err))
 	}
 	fmt.Println("[configure]loaded config succeed.")
+	c.SecretKey = secretKey
 	return &c
 }
