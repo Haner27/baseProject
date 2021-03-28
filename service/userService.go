@@ -87,6 +87,9 @@ func (us *UserService) RegisterUser(req *entity.UserRegisterReq) *entity.UserRes
 
 func (us *UserService) LoadUserById(req *entity.UserLoaderReq) *entity.UserResp {
 	userModel := us.userRepo.GetUserById(req.UserId)
+	if userModel == nil {
+		return nil
+	}
 	return us.model2resp(userModel)
 }
 

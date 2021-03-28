@@ -19,7 +19,7 @@ type Mysql struct {
 
 func (m *Mysql) GetDSN() string {
 	return fmt.Sprintf(
-		"%s:%s@tcp(%s:%d)/%s?charset=utf8mb4",
+		"%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=true",
 		m.Username,
 		m.Password,
 		m.Ip,

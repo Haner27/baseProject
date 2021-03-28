@@ -51,7 +51,7 @@ func (u *UserRepository) CreateUser(
 			Gender:   gender,
 			Birthday: birthday,
 		}
-		err := tx.Create(&user)
+		err := tx.Create(&user).Error
 		if err != nil {
 			tx.Rollback()
 		}

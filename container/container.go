@@ -12,10 +12,6 @@ import (
 	"go.uber.org/dig"
 )
 
-func CloseResource(redisDb *datasource.RedisDb) {
-	redisDb.Close()
-}
-
 func BuildContainer() *dig.Container {
 	container := dig.New()
 	// config

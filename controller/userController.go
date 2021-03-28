@@ -37,6 +37,10 @@ func (uc *UserController) GetUserById(ctx *gin.Context) {
 		return
 	}
 	respData := uc.userService.LoadUserById(&req)
+	if respData == nil {
+		resp.ErrorResp(ctx, e.UserNotFound, "")
+		return
+	}
 	resp.SuccessResp(ctx, respData)
 }
 
