@@ -3,6 +3,7 @@ package server
 import (
 	"baseProject/config"
 	"baseProject/router"
+	"baseProject/util/logger"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -15,11 +16,12 @@ import (
 
 type HttpServer struct {
 	conf *config.Config
+	logger *logger.Logger
 	router *router.Router
 }
 
-func NewHttpServer(conf *config.Config, router *router.Router) *HttpServer {
-	return &HttpServer{conf, router}
+func NewHttpServer(conf *config.Config, logger *logger.Logger, router *router.Router) *HttpServer {
+	return &HttpServer{conf, logger, router}
 }
 
 func (hc *HttpServer) GetAddress() string {
@@ -36,19 +38,19 @@ func (hc *HttpServer) Run() {
 		Handler: hc.router.Engine,
 	}
 	go func() {
-		fmt.Printf("[%s]server starting on %s\n", hc.conf.Project.Stage, address)
+		hc.logger.Infof("[%s]server starting on %s", hc.conf.Project.Stage, address)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			fmt.Printf("listen: %s\n", err)
+			hc.logger.Errorf("listen: %s", err)
 		}
 	}()
 	quit := make(chan os.Signal)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	fmt.Printf("Shutting down server...")
+	hc.logger.Info("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		fmt.Printf("Server forced to shutdown:%s\n", err)
+		hc.logger.Errorf("Server forced to shutdown:%s", err)
 	}
 }

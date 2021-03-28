@@ -42,6 +42,7 @@ type Project struct {
 	Stage     string `mapstructure:"stage"`
 	Port      int    `mapstructure:"port"`
 	SecretKey string `mapstructure:"secretKey"`
+	LogDir    string `mapstrucrure:"logDir"`
 }
 
 type Config struct {

@@ -8,6 +8,7 @@ import (
 	"baseProject/router"
 	"baseProject/server"
 	"baseProject/service"
+	"baseProject/util/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 )
@@ -16,6 +17,9 @@ func BuildContainer() *dig.Container {
 	container := dig.New()
 	// config
 	_ = container.Provide(config.InitConfig)
+
+	// logger
+	_ = container.Provide(logger.NewLogger)
 
 	// datasource
 	_ = container.Provide(datasource.NewMysqlDB)

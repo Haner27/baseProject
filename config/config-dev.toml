@@ -3,6 +3,7 @@ name = "baseProject"
 stage = "development"
 port = 8888
 secretKey = "haner27"
+logDir = "./logs"
 
 [mysql]
 ip = "127.0.0.1"
