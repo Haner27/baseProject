@@ -3,6 +3,7 @@ package router
 import (
 	"baseProject/controller"
 	_ "baseProject/docs"
+	"baseProject/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -15,6 +16,7 @@ type Router struct {
 
 func NewRouter(
 	engine *gin.Engine,
+	limiter *middleware.SliderWindowLimiter,
 	userCtrl *controller.UserController,
 ) *Router {
 	// global middleware
@@ -32,6 +34,7 @@ func NewRouter(
 	})
 
 	v1 := engine.Group("/v1")
+	v1.Use(limiter.Limiter(3, 5))
 	{
 		userGroup := v1.Group("/user")
 		{

@@ -4,6 +4,7 @@ import (
 	"baseProject/config"
 	"baseProject/controller"
 	"baseProject/datasource"
+	"baseProject/middleware"
 	"baseProject/repository"
 	"baseProject/router"
 	"baseProject/server"
@@ -36,6 +37,10 @@ func BuildContainer() *dig.Container {
 
 	// gin engine
 	_ = container.Provide(gin.New)
+
+	// middleware
+	_ = container.Provide(middleware.NewSliderWindowLimiter)
+	_ = container.Provide(middleware.NewTokenBucketLimiter)
 
 	// router
 	_ = container.Provide(router.NewRouter)

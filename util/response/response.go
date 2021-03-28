@@ -30,3 +30,10 @@ func ErrorResp(ctx *gin.Context, code e.ErrCode, msg string) {
 	}
 	ctx.JSON(http.StatusBadRequest, NewResponse(int(code), msg, nil))
 }
+
+func FrequentlyRequestResp(ctx *gin.Context) {
+	ctx.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
+		"status":  http.StatusTooManyRequests,
+		"message": "too many request",
+	})
+}
