@@ -1,14 +1,14 @@
 [project]
 name = "baseProject"
 stage = "development"
-pory = 8888
+port = 8888
 secretKey = "haner27"
 
 [mysql]
 ip = "127.0.0.1"
 port = 3306
 username = "root"
-password = "hnf"
+password = "haner27"
 database = "hnf"
 
 [redis]

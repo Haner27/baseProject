@@ -14,16 +14,16 @@ import (
 )
 
 type HttpServer struct {
-	conf config.Config
+	conf *config.Config
 	router *router.Router
 }
 
-func NewHttpServer(conf config.Config, router *router.Router) *HttpServer {
+func NewHttpServer(conf *config.Config, router *router.Router) *HttpServer {
 	return &HttpServer{conf, router}
 }
 
 func (hc *HttpServer) GetAddress() string {
-	return fmt.Sprintf("http://0.0.0.0:%d", hc.conf.Project.Port)
+	return fmt.Sprintf("0.0.0.0:%d", hc.conf.Project.Port)
 }
 
 func (hc *HttpServer) Run() {

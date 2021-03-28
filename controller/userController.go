@@ -10,11 +10,11 @@ import (
 
 type (
 	UserController struct {
-		userService service.IUserService
+		userService *service.UserService
 	}
 )
 
-func NewUserController(userService service.IUserService) *UserController {
+func NewUserController(userService *service.UserService) *UserController {
 	return &UserController{
 		userService,
 	}
@@ -27,5 +27,25 @@ func (uc *UserController) Register(ctx *gin.Context) {
 		return
 	}
 	respData := uc.userService.RegisterUser(&req)
+	resp.SuccessResp(ctx, respData)
+}
+
+func (uc *UserController) GetUserById(ctx *gin.Context) {
+	var req entity.UserLoaderReq
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		resp.ErrorResp(ctx, e.ParamsInvalid, "")
+		return
+	}
+	respData := uc.userService.LoadUserById(&req)
+	resp.SuccessResp(ctx, respData)
+}
+
+func (uc *UserController) GetUsers(ctx *gin.Context) {
+	var req entity.UsersLoaderReq
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		resp.ErrorResp(ctx, e.ParamsInvalid, "")
+		return
+	}
+	respData := uc.userService.LoadUsers(&req)
 	resp.SuccessResp(ctx, respData)
 }

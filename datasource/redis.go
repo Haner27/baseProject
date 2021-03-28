@@ -9,6 +9,10 @@ type RedisDb struct {
 	Cli *redis.Client
 }
 
+func(r *RedisDb) Close() {
+	r.Cli.Close()
+}
+
 func NewRedisDb(conf *config.Config) *RedisDb {
 	options := redis.Options{
 		Network:            "tcp",

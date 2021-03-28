@@ -36,11 +36,13 @@ type (
 	}
 	UserService struct {
 		conf     *config.Config
-		userRepo repository.IUserRepository
+		userRepo *repository.UserRepository
+		//userRepo repository.IUserRepository
 	}
 )
 
-func NewUserService(conf *config.Config, userRepo repository.IUserRepository) *UserService {
+func NewUserService(conf *config.Config, userRepo *repository.UserRepository) *UserService {
+//func NewUserService(conf *config.Config, userRepo repository.IUserRepository) *UserService {
 	return &UserService{
 		conf,
 		userRepo,
@@ -53,7 +55,7 @@ func (us *UserService) birthdayStr2Time(birthdayStr string) time.Time {
 }
 
 func (us *UserService) encryptPassword(rawPassword string) string {
-	b := []byte(rawPassword + us.conf.SecretKey)
+	b := []byte(rawPassword + us.conf.Project.SecretKey)
 	return fmt.Sprintf("%x", md5.Sum(b))
 }
 
