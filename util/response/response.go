@@ -28,5 +28,5 @@ func ErrorResp(ctx *gin.Context, code e.ErrCode, msg string) {
 	if msg == "" {
 		msg = e.GetErrorStr(code)
 	}
-	ctx.JSON(http.StatusOK, NewResponse(int(code), msg, nil))
+	ctx.JSON(http.StatusBadRequest, NewResponse(int(code), msg, nil))
 }

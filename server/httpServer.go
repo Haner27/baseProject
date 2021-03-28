@@ -36,7 +36,7 @@ func (hc *HttpServer) Run() {
 		Handler: hc.router.Engine,
 	}
 	go func() {
-		fmt.Printf("[%s]server starting on %s", hc.conf.Project.Stage, address)
+		fmt.Printf("[%s]server starting on %s\n", hc.conf.Project.Stage, address)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			fmt.Printf("listen: %s\n", err)
 		}
@@ -49,6 +49,6 @@ func (hc *HttpServer) Run() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		fmt.Printf("Server forced to shutdown:%s", err)
+		fmt.Printf("Server forced to shutdown:%s\n", err)
 	}
 }
